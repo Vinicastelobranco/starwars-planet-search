@@ -3,8 +3,6 @@ import FilterContext from '../Context/Context';
 
 export default function Table() {
   const TEN = 10;
-  const ONE = 1;
-  const MINUS_ONE = -1;
   const [planets, setPlanets] = useState([]);
   const { filterByName, filterByNumericValues } = useContext(FilterContext);
   const { name } = filterByName;
