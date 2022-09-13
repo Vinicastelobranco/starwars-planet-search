@@ -8,7 +8,7 @@ export default function Table() {
   const { name } = filterByName;
   useEffect(() => {
     const fetchPlanets = async () => {
-      const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+      const endpoint = 'https://swapi.dev/api/planets';
       const response = await fetch(endpoint);
       const data = await response.json();
       const { results } = data;
@@ -30,7 +30,7 @@ export default function Table() {
       setPlanets(planetsData);
     };
     fetchPlanets();
-  });
+  }, []);
 
   const planetSearch = name.length > 0 ? planets
     .filter((planet) => (planet.name.toLowerCase().includes(name.toLowerCase())))
@@ -43,8 +43,9 @@ export default function Table() {
       filteredPlanets = filteredPlanets
         .filter((planet) => (parseInt(planet[column], TEN) > parseInt(value, TEN)));
       break;
-    case 'menor que': filteredPlanets
-      .filter((planet) => parseInt(planet[column], TEN) < parseInt(value, TEN));
+    case 'menor que':
+      filteredPlanets = filteredPlanets
+        .filter((planet) => (parseInt(planet[column], TEN) < parseInt(value, TEN)));
       break;
     default:
       filteredPlanets = filteredPlanets
