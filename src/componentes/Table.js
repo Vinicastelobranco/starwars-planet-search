@@ -3,8 +3,10 @@ import FilterContext from '../Context/Context';
 
 export default function Table() {
   const TEN = 10;
+  const MINUS_ONE = -1;
+  const ONE = 1;
   const [planets, setPlanets] = useState([]);
-  const { filterByName, filterByNumericValues } = useContext(FilterContext);
+  const { filterByName, filterByNumericValues, order } = useContext(FilterContext);
   const { name } = filterByName;
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -52,6 +54,13 @@ export default function Table() {
         .filter((planet) => (parseInt(planet[column], TEN) === parseInt(value, TEN)));
       break;
     }
+  });
+
+  filteredPlanets.sort((a, b) => {
+    const { column, sort } = order;
+    if (a[column] === 'unknown') return ONE;
+    if (b[column] === 'unknown') return MINUS_ONE;
+    return sort === 'ASC' ? a[column] - b[column] : b[column] - a[column];
   });
 
   return (
